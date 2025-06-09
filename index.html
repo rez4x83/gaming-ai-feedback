@@ -1,0 +1,138 @@
+
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+  <meta charset="UTF-8">
+  <title>وب‌سایت گیمینگ با پاسخ AI</title>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    body {
+      font-family: 'Vazirmatn', sans-serif;
+      background-color: #0a0f2c;
+      color: #fff;
+      margin: 0;
+      padding: 0;
+      direction: rtl;
+      background-image: url('https://www.transparenttextures.com/patterns/dark-mosaic.png');
+    }
+    header {
+      text-align: center;
+      padding: 30px;
+      background-color: #111844;
+      box-shadow: 0 0 10px #00ffff;
+    }
+    header h1 {
+      font-family: 'Press Start 2P', cursive;
+      color: #00ffff;
+      font-size: 24px;
+    }
+    .container {
+      max-width: 700px;
+      margin: auto;
+      padding: 20px;
+    }
+    .comment-box {
+      background-color: #1a1f4c;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px #00ffff80;
+    }
+    .comment-box textarea {
+      width: 100%;
+      height: 100px;
+      padding: 10px;
+      font-family: 'Vazirmatn', sans-serif;
+      background: #0f132f;
+      border: none;
+      border-radius: 5px;
+      color: #fff;
+      resize: vertical;
+    }
+    .comment-box button {
+      margin-top: 10px;
+      padding: 10px 20px;
+      background: #00ffff;
+      color: #000;
+      font-weight: bold;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .response {
+      margin-top: 15px;
+      background: #222a5c;
+      padding: 15px;
+      border-radius: 10px;
+      border-right: 4px solid #00ffff;
+      font-size: 14px;
+      color: #80faff;
+    }
+    .icon-area {
+      text-align: center;
+      margin: 20px 0;
+    }
+    .icon-area i {
+      font-size: 30px;
+      color: #00ffff;
+      margin: 10px;
+    }
+    footer {
+      background-color: #111844;
+      color: #ccc;
+      padding: 20px;
+      text-align: center;
+      font-size: 12px;
+      border-top: 2px solid #00ffff;
+    }
+  </style>
+</head>
+<body>
+<header>
+  <h1>🎮 نظر بده، AI جواب می‌ده</h1>
+</header>
+<div class="icon-area">
+  <i class="fas fa-gamepad"></i>
+  <i class="fas fa-skull-crossbones"></i>
+  <i class="fas fa-space-shuttle"></i>
+  <i class="fas fa-headset"></i>
+</div>
+<div class="container">
+  <div class="comment-box">
+    <label for="comment">نظر شما درباره بازی:</label>
+    <textarea id="comment" placeholder="مثلاً: بازی God of War چطوره؟"></textarea>
+    <button onclick="askAI()">ارسال نظر</button>
+    <div id="response" class="response" style="display:none;">در حال پردازش...</div>
+  </div>
+</div>
+<footer>
+  ساخته شده برای گیمرهای فارسی‌زبان | 2025 🎮
+</footer>
+<script>
+  async function askAI() {
+    const comment = document.getElementById('comment').value.trim();
+    const responseBox = document.getElementById('response');
+    if (!comment) {
+      alert("لطفاً یک نظر وارد کنید.");
+      return;
+    }
+    responseBox.style.display = 'block';
+    responseBox.innerText = '🤖 در حال پردازش نظر شما با هوش مصنوعی...';
+    try {
+      const res = await fetch('https://your-backend-url.onrender.com/api/ai-response', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ prompt: `یک پاسخ مؤدبانه و فارسی به این نظر بده: \"${comment}\"` })
+      });
+      const data = await res.json();
+      responseBox.innerText = '✅ پاسخ AI: ' + data.response;
+    } catch (error) {
+      responseBox.innerText = '❌ خطا در دریافت پاسخ از سرور AI.';
+      console.error(error);
+    }
+  }
+</script>
+</body>
+</html>
